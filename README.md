@@ -25,11 +25,11 @@
 git clone [https://github.com/amaltomajith/StoryWeaver.git](https://github.com/amaltomajith/StoryWeaver.git)
 cd StoryWeaver
 ```
-2. Install Dependencies
+### 2. Install Dependencies
 ```bash
 npm install
 ```
-3. Setup Environment Variables
+### 3. Setup Environment Variables
 Create a file named .env.local in the root directory and paste the following:
 ```Code snippet
 # --- Supabase (Core Backend) ---
@@ -43,7 +43,7 @@ NEXT_PUBLIC_POLLINATIONS_API_KEY=your-optional-key
 NEXT_PUBLIC_MURF_API_KEY=your-murf-api-key
 MURF_API_KEY=your-murf-api-key
 ```
-4. Run the development server
+### 4. Run the development server
 ```bash
 npm run dev
 ```
