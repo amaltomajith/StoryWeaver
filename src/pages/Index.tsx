@@ -97,10 +97,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <ThemeToggle />
-      {/* Subtle gradient overlay */}
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_hsl(250_70%_58%_/_0.04)_0%,_transparent_50%)]" />
 
-      <main className="relative z-10 max-w-2xl mx-auto px-4 py-12 md:py-20">
+      {/* Layered ambient background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,hsl(252_72%_58%_/_0.07),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_80%_80%,hsl(280_60%_55%_/_0.04),transparent)]" />
+      </div>
+
+      <main className="relative z-10 max-w-2xl mx-auto px-4 py-14 md:py-24">
         <AnimatePresence mode="wait">
           {!setup ? (
             <StorySetupForm key="setup" onStart={handleStart} isLoading={isGenerating} />
@@ -109,7 +113,7 @@ const Index = () => {
               key="story"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="space-y-8"
+              className="space-y-10"
             >
               {/* Progress */}
               <StoryProgress current={chapters.length} total={setup.totalChapters} />
@@ -141,8 +145,8 @@ const Index = () => {
                   )}
                   {i < chapters.length - 1 && ch.chosenOption && (
                     <div className="text-center">
-                      <span className="inline-block text-xs uppercase tracking-[0.2em] text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
-                        You chose: {ch.chosenOption}
+                      <span className="inline-block text-xs uppercase tracking-[0.2em] text-muted-foreground bg-muted/60 px-3 py-1 rounded-full border border-border/50">
+                        ✦ You chose: {ch.chosenOption}
                       </span>
                     </div>
                   )}
@@ -152,13 +156,16 @@ const Index = () => {
               {/* Loading state */}
               {isGenerating && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-12 space-y-3"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center py-16 space-y-4"
                 >
-                  <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-                  <p className="text-muted-foreground italic" style={{ fontFamily: "var(--font-body)" }}>
-                    The story unfolds...
+                  <div className="relative w-12 h-12 mx-auto">
+                    <div className="absolute inset-0 rounded-full bg-primary/10 animate-ping" />
+                    <div className="absolute inset-0 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                  </div>
+                  <p className="text-muted-foreground italic text-sm" style={{ fontFamily: "var(--font-body)" }}>
+                    The story unfolds…
                   </p>
                 </motion.div>
               )}

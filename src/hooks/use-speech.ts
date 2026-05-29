@@ -1,8 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-
 export function useSpeech() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -52,13 +49,9 @@ export function useSpeech() {
     abortRef.current = controller;
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/elevenlabs-tts`, {
+      const res = await fetch("/api/elevenlabs-tts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          apikey: SUPABASE_KEY,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
         signal: controller.signal,
       });
