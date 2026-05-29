@@ -1,23 +1,14 @@
 import { StorySetup, StoryChapter } from "@/types/story";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${SUPABASE_KEY}`,
-  apikey: SUPABASE_KEY,
-};
-
 export async function generateStoryChapter(
   setup: StorySetup,
   chapterNumber: number,
   previousStory?: string,
   chosenOption?: string
 ): Promise<StoryChapter> {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/generate-story`, {
+  const res = await fetch("/api/generate-story", {
     method: "POST",
-    headers,
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       prompt: setup.prompt,
       theme: setup.theme,
